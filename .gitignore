@@ -1,0 +1,36 @@
+# dependencies
+node_modules/
+.next/
+dist/
+build/
+coverage/
+
+# environment / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# local databases / research corpus
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*.sqlite-*
+
+# local evidence / private research artifacts
+evidence/
+research-data/
+raw-sources/
+downloads/
+private/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# logs
+*.log
