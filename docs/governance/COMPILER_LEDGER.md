@@ -22,7 +22,7 @@ This is the pickup surface for standing compiler workers and the verifier. Sched
 ### COMPILER-000 — Environment baseline
 Role: WORKER
 Preferred runner: WORKER-1
-State: READY
+State: CLAIMED
 Dependencies: none
 Scope: Prepare the pinned compiler environment, strict TypeScript, reproducible install/typecheck/test/build commands, environment schema, canonical directories, and local-only SQLite versus browser/Vercel separation.
 Receipt required: changed files, commands, results, assumptions, gaps, exact commit, PASS/BLOCKED.
@@ -87,3 +87,11 @@ Scope: Create fixtures and expected behavior for source success, degradation, ou
 ## Claims and receipts
 
 Append runner claims and receipts below this line. Preserve history; do not rewrite prior entries.
+
+
+### CLAIM — COMPILER-000
+- Claim time: `2026-09-02T20:42:26Z`
+- Runner: `WORKER-1`
+- Assignment: `COMPILER-000 — Environment baseline`
+- Branch: `main` (no separate branch was named by the packet; repository default is the authorized integration branch)
+- State: `CLAIMED`
