@@ -23,3 +23,14 @@ This repository is the shared implementation surface for Ashante, the Wayne Coun
 ## Repository posture
 
 The remaining work is implementation validation and construction, not broad product rediscovery. Existing Build Assets remain authoritative inside their defined scopes unless concrete implementation evidence exposes a conflict.
+
+## Compiler baseline
+
+Use Node.js 24 (`.nvmrc`) and npm 11.9.0. The reproducible compiler path is:
+
+```bash
+npm ci
+npm run verify
+```
+
+`verify` runs strict TypeScript checking, tests, and a production Next.js build. Environment names and runtime boundaries are documented in `.env.example` and `docs/architecture/RUNTIME_BOUNDARIES.md`. Do not create `.env.local`, run database commands, or start cloud-dependent development work until the intended Vercel project is linked and required environment key names are verified.
