@@ -32,7 +32,35 @@ Until those files arrive:
 - Their function is formalization, traceability, and handoff support.
 - Their arrival does not reopen the accepted UI direction.
 - On arrival, add exact filenames, source identifiers, and scope to `../ASSET_MANIFEST.md`.
-- If a Meta document materially conflicts with either governing artifact, record the conflict and halt the affected implementation decision for operator adjudication.
+
+## Meta mirror acceptance gate
+
+Compare Meta's mirror against both governing UI artifacts before promotion.
+
+**Promote and close UI only when:**
+
+- The mirror is the same as, or materially equivalent to, the operator's specification and prototype.
+- All UI, workflow, boundary, data-visibility, status, risk, freshness, mobile, and bidding invariants remain unchanged.
+- Differences are limited to wording, organization, clarification, traceability, or implementation-neutral formalization.
+
+When those conditions pass:
+
+1. Register and promote the Meta documents as companion Build Assets.
+2. Change this file's status to **CLOSED — UI LOCKED**.
+3. Mark the UI lane closed across the active work queue.
+4. Permit implementation of the locked UI, but no further product-design changes.
+
+**Do not promote when:**
+
+- Any invariant is added, removed, weakened, strengthened, reinterpreted, or contradicted.
+- A difference changes what the user sees, what the system gates, what data crosses the boundary, or how desktop/mobile behavior works.
+- Material equivalence cannot be established confidently.
+
+When any condition fails, keep the Meta documents unpromoted, record the exact variance, and flag the operator for adjudication.
+
+## Closure authority
+
+After the Meta mirror passes and the UI lane is marked closed, no agent may revise, optimize, reinterpret, expand, or reopen the UI. Any subsequent UI change requires a new explicit operator directive. Bug fixes may restore conformity to the locked artifacts; they may not alter the accepted design.
 
 ## Build instruction
 
