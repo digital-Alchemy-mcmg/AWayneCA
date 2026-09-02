@@ -1,67 +1,56 @@
 # UI Specification and Prototype Status
 
-Status: **DONE**
+Status: **CLOSED — UI LOCKED**
 
-## Governing artifacts
+Closed: 2026-09-02
+Closure authority: Operator directive.
+Canonical Figma/wireframe specification: `Ashante_SXV8_Figma_Wireframe_Spec_v1.0.0.pdf`
 
-1. `React-Artifact-ui-prototype-spec.html` is the governing UI specification.
-2. `React-Artifact-ui-proto-demo.html` is the executable interaction and visual reference.
-3. `Wayne-Auction-Cockpit-Ui-Only.html` remains preserved as earlier lineage/reference material.
+## Governing authority
 
-When prose and implementation interpretation differ, agents must compare both governing artifacts and escalate a concrete conflict. They must not silently redesign the product.
+All UI implementations must conform to the same frozen specification used to produce the accepted UI. Agents are not instructed to imitate prototype code or incidental demo wiring.
 
-## Locked interaction model
+Authority order:
 
-- Desktop is the research and decision Lab.
-- A heart action promotes the complete Property Envelope; it is not a lightweight bookmark.
-- The promotion boundary exposes gate checks and blocks incomplete or stale candidates.
-- Mobile is the Field Cockpit and displays only promoted properties.
-- Mobile uses a single-property, one-screen-at-a-time posture.
-- Target, hard cap, watch-outs, evidence, risks, and freshness remain visible or directly reachable.
-- Bidding is manual. No auto-bidding is authorized.
-- Stale data must trigger explicit official-source reverification language.
-- Day/night presentation, serif headings, calm orientation, and 44px touch targets belong to the accepted direction.
+1. Operator directives.
+2. Frozen architectural and interaction invariants in the canonical Figma/wireframe specification.
+3. Shared canonical Property Envelope and Build Contract.
+4. The governing HTML UI specification.
+5. The prototype demo as visual and interaction evidence.
 
-## Meta documentation mirror
+When a lower source conflicts with a higher source, the higher source controls. A prototype shortcut never overrides an invariant.
 
-Meta will place another set of formal documentation in the Build Assets folder mirroring this completed UI specification and prototype.
+## Locked UI invariants
 
-Until those files arrive:
+- Desktop is the high-entropy research and decision Workbench.
+- Mobile is the low-entropy Field Cockpit and never exposes the unvetted research corpus.
+- Heart stages the complete canonical Property Envelope for deterministic promotion; it is not a bookmark.
+- Title clearance, roof-risk eligibility, freshness under 72 hours, and configured target/hard bid caps are mandatory promotion checks.
+- Only passing envelopes enter the mobile projection.
+- Mobile is capped at 30 promoted envelopes.
+- Bidding is manual. The system never places or automates bids.
+- Target, hard cap, watch-outs, evidence, risks, freshness, and status remain visible or directly reachable as specified.
+- Status communicates through icon, text, and color together.
+- Critical watch-outs cannot be hidden or collapsed.
+- Desktop and mobile share the canonical contract without becoming the same interface.
 
-- Their status is **EXPECTED / NOT YET REGISTERED**.
-- Their function is formalization, traceability, and handoff support.
-- Their arrival does not reopen the accepted UI direction.
-- On arrival, add exact filenames, source identifiers, and scope to `../ASSET_MANIFEST.md`.
+## Implementation interpretations
 
-## Meta mirror acceptance gate
+These preserve the specification and do not constitute UI changes:
 
-Compare Meta's mirror against both governing UI artifacts before promotion.
+- A Figma or demo `Keep` action may select or stage a property, but it cannot bypass the Promotion Gate.
+- A 36px carousel-arrow graphic must be placed inside an interactive target of at least 44px.
+- Auction `+$500` and `+$1,000` controls modify only the local manual-bid input. They never submit or place a bid.
+- The complete promoted envelope means the complete bounded canonical field projection. Bulky raw evidence remains in evidence storage and is referenced by stable metadata.
+- The 72-hour threshold controls promotion eligibility. The stricter 48-hour auction warning is an additional reverification warning, not an alternate promotion rule.
+- Non-blocking warnings may remain visible after promotion; the four mandatory checks above may not be bypassed.
 
-**Promote and close UI only when:**
+## Compatibility and promotion rule
 
-- The mirror is the same as, or materially equivalent to, the operator's specification and prototype.
-- All UI, workflow, boundary, data-visibility, status, risk, freshness, mobile, and bidding invariants remain unchanged.
-- Differences are limited to wording, organization, clarification, traceability, or implementation-neutral formalization.
+An implementation is compatible only when it conforms to the frozen specification and canonical contracts. Do not promote any design, component, screen, pull request, or implementation that changes an invariant, bypasses the Promotion Gate, introduces an incompatible property model, or substitutes prototype convenience behavior for specified behavior.
 
-When those conditions pass:
+## Closure rule
 
-1. Register and promote the Meta documents as companion Build Assets.
-2. Change this file's status to **CLOSED — UI LOCKED**.
-3. Mark the UI lane closed across the active work queue.
-4. Permit implementation of the locked UI, but no further product-design changes.
+The UI design lane is closed. No agent may redesign, optimize, expand, reinterpret, or reopen it without a new explicit operator directive. Engineering may make only conformity corrections, responsive/accessibility implementations, defect repairs, and production wiring required to realize the frozen specification. Those adjustments must not materially change structural components or interaction architecture.
 
-**Do not promote when:**
-
-- Any invariant is added, removed, weakened, strengthened, reinterpreted, or contradicted.
-- A difference changes what the user sees, what the system gates, what data crosses the boundary, or how desktop/mobile behavior works.
-- Material equivalence cannot be established confidently.
-
-When any condition fails, keep the Meta documents unpromoted, record the exact variance, and flag the operator for adjudication.
-
-## Closure authority
-
-After the Meta mirror passes and the UI lane is marked closed, no agent may revise, optimize, reinterpret, expand, or reopen the UI. Any subsequent UI change requires a new explicit operator directive. Bug fixes may restore conformity to the locked artifacts; they may not alter the accepted design.
-
-## Build instruction
-
-Implementation agents should reproduce the accepted behavior and visual system in production components while preserving the Property Envelope contract and desktop-to-mobile promotion boundary. Prototype fixture data, embedded convenience code, and artifact-host wrappers are reference implementation material, not automatically production architecture.
+GPT Cloud / Foreman owns adjudication of UI implementation variances against this specification. Material uncertainty returns to the operator; incompatible work remains unpromoted.
