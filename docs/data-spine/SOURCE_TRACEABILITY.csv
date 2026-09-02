@@ -1,0 +1,29 @@
+Spine Type,Primary Source Document,Section
+PropertyEnvelope,Deployment Contract + Agent Handoff,§4 — Canonical Property Envelope
+PropertyIdentity,Deployment Contract,§5 — Property Identity
+AuctionItem,Backend MoSCoW,M-01 + Data Contracts
+Evidence,Backend MoSCoW,M-03 + Data Contracts
+SourceRegistryEntry,Backend MoSCoW + Feasibility Matrix,§6 + §1-8
+Recommendation,Backend MoSCoW,Must-Have Recommendation Contract
+BidPlan,Backend MoSCoW,Bid Formula Contract
+ReviewGate / ReviewGateType,Backend MoSCoW,§5 Taxonomy + §7 Gate Rules
+Strategy / RecommendedAction,Backend MoSCoW,§5 Canonical Taxonomy
+AssetClass,Backend MoSCoW,§5 Canonical Taxonomy
+TitleStatus,Feasibility Matrix,§3 Required Status Enum
+SourceOperationalStatus,Deployment Contract + Agent Handoff,§9 Source Health
+HumanEscalation,Deployment Contract,§10 Human Escalation Path
+OperatorPreferences,Target Event + Backend MoSCoW,M-14
+PromotionSnapshot,Deployment Contract,§7 Promotion Gate
+FieldProvenance,SXV8-Risk-Fidelity-MoSCoW,Part 2 — Fidelity Layer
+FidelityStatus,SXV8-Risk-Fidelity-MoSCoW,Part 2 — "Fidelity isn't binary"
+EpistemicState (FACT/SIGNAL/ESTIMATE/UNKNOWN),Deployment Contract,§4 + §14
+ImageryObservation,Feasibility Matrix,§5 + Constraint 2
+NeighborhoodContext,commons.txt + Feasibility Matrix,§7
+EnvironmentalFlags,Feasibility Matrix,§8
+ZoningRecord,Backend MoSCoW + Feasibility Matrix,M-13 + §4
+IngestionState,Backend MoSCoW,§7 State Machine
+AuditLogEntry,Backend MoSCoW,M-15
+ExportRecord,Deployment Contract,§11 Portability
+SQLITE_TABLE_MANIFEST,Backend MoSCoW,§5 Core Tables
+INITIAL_SOURCE_ADAPTERS,Backend MoSCoW + Feasibility Matrix,§6 + §1-8
+FORBIDDEN_OUTPUT_VALUES,Feasibility Matrix + Backend MoSCoW,§3 + W-01–W-10
