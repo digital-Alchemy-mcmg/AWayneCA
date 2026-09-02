@@ -22,7 +22,12 @@ This directory records the source package used to govern implementation. Where f
 - `SXV8-IT-Roadmap.md` — Drive ID `1SYhg2sJs1-s8cNRYKTp426HETCTpFuao0CsSC-PfU2c`.
 
 ## UI reference
-- `Wayne-Auction-Cockpit-Ui-Only.html` — Drive ID `1eY9LUP6buOTiL3YpdGvO-1qowK8r7D8Q` — existing UI artifact; preserve as reference, do not reinterpret visual language casually.
+- `Wayne-Auction-Cockpit-Ui-Only.html` — Drive ID `1eY9LUP6buOTiL3YpdGvO-1qowK8r7D8Q` — earlier UI artifact; preserve as lineage reference.
+- `ui/React-Artifact-ui-prototype-spec.html` — source upload `React Artifact-ui prototype spec.html`; Library ID `libfile_bb3929079b78819190046ad550356923` — governing UI specification. UI spec status: DONE.
+- `ui/React-Artifact-ui-proto-demo.html` — source upload `React Artifact- ui Proto demo.html`; Library ID `libfile_9ada57d2e29c8191b75d0ca130dee50b` — executable interaction and visual reference. UI prototype status: DONE.
+- `ui/UI_STATUS.md` — implementation authority, invariants, and pending Meta documentation mirror.
+
+Meta will place another set of formal documentation in the Build Assets folder mirroring the completed UI specification and prototype. Those documents are expected companion documentation. Unless the operator explicitly changes scope, they formalize and trace the completed UI direction rather than reopening it for redesign.
 
 ## Research/source artifacts
 - `Meta brief.pdf` — Drive ID `11TKJbna9vAPEmCmbWhREHeSxadOeo3G6`.
