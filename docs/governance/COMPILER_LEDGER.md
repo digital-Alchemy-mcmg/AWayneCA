@@ -43,6 +43,47 @@ Dependencies: passing receipts and exact commits for COMPILER-000 and COMPILER-0
 Scope: Independently verify environment reproducibility, runtime boundaries, schema reconciliation, validator/test alignment, UI-required fields, Build Contract invariants, and traceability. Do not repair.
 Receipt required: PASS/FAILED/BLOCKED with exact evidence and variances. Only PASS may open SQLite certification.
 
+## Bounded fallback queue
+
+Use this queue only when the primary compiler assignment is blocked or no higher-priority eligible packet exists. Fallback work must produce reusable evidence or fixtures and may not alter frozen architecture.
+
+### RESEARCH-001 — Source capability cards
+Role: WORKER
+State: READY_FALLBACK
+Scope: Build one evidence-based capability card per planned source: DS_Auction, DS_GIS, DS_BSEED, DS_Env, DS_Title, DS_MLS, and DS_Imagery. Record access method, expected fields, authority level, refresh pattern, failure modes, legal/access limitations, cost tier, and human escalation. Do not claim a source is operational without live proof.
+
+### PREPROCESS-001 — Auction-data normalization plan
+Role: WORKER
+State: READY_FALLBACK
+Scope: Using permitted source snapshots and existing contracts, document deterministic normalization, identity, deduplication, missing-value, conflict, and provenance rules. Produce test vectors; do not silently resolve ambiguous parcel identities.
+
+### FIXTURE-001 — Property Envelope fixture factory
+Role: WORKER
+State: WAITING_ON_COMPILER-001
+Dependencies: passing canonical schema/validator receipt
+Scope: Create synthetic, non-private Property Envelope fixtures covering valid, incomplete, stale, blocked, conflicting-identity, missing-evidence, source-degraded, and 30-envelope boundary cases. Fixtures must validate against the canonical contract and must never masquerade as real properties.
+
+### TRACE-001 — UI-to-envelope crosswalk
+Role: WORKER
+State: WAITING_ON_COMPILER-001
+Dependencies: passing canonical schema/validator receipt
+Scope: Map every field required by the frozen Desktop Workbench and Mobile Field Cockpit to its canonical Property Envelope path, evidence requirement, freshness behavior, and empty/unknown state. Report gaps; do not add fields unilaterally.
+
+### FAILURE-001 — Source-health scenarios
+Role: WORKER
+State: WAITING_ON_W3_INTERFACE
+Dependencies: accepted adapter/source-health interface
+Scope: Create fixtures and expected behavior for source success, degradation, outage, schema drift, human-only state, stale-but-preserved evidence, and recovery.
+
+## Fallback prohibitions
+
+- No filler features, speculative screens, or architecture changes.
+- No automated title conclusions or manufactured title clearance.
+- No inference presented as verified property fact.
+- No live/private property data committed to Git.
+- No scraping that violates source terms or bypasses access controls.
+- No promotion of research output into production authority without the required verification gate.
+
 ## Claims and receipts
 
 Append runner claims and receipts below this line. Preserve history; do not rewrite prior entries.
