@@ -30,7 +30,7 @@ Receipt required: changed files, commands, results, assumptions, gaps, exact com
 ### COMPILER-001 — Data-spine reconciliation
 Role: WORKER
 Preferred runner: WORKER-2
-State: READY
+State: CLAIMED
 Dependencies: passing COMPILER-000 receipt
 Scope: Hash and compare the schema-freeze copies; reconcile and import the canonical contract, validators, and validation tests; run type-check and validation tests; return field-level traceability.
 Receipt required: comparison result, selected authority, changed files, commands, test results, discrepancies, exact commit, PASS/BLOCKED.
@@ -128,3 +128,12 @@ Append runner claims and receipts below this line. Preserve history; do not rewr
   - SQLite driver and migrations remain closed until COMPILER-001 reconciles the canonical contract.
   - GitHub Actions was added, but no workflow run was yet attached when the receipt was written; local clean-install evidence is passing.
 - Invariant check: PASS. SQLite remains local authoritative storage; Vercel/browser paths cannot open it; Firestore remains a future promoted-projection boundary; no UI structure or Property Envelope field was invented.
+
+
+### CLAIM — COMPILER-001
+- Claim time: `2026-09-02T21:14:45Z`
+- Runner: `WORKER-2`
+- Assignment: `COMPILER-001 — Data-spine reconciliation`
+- Branch: `main` (packet names no separate work branch; repository default remains the integration branch)
+- Dependency: COMPILER-000 PASS at `7e15b9291c7df0c7eb5bc09ec35cc3154adea6f1`
+- State: `CLAIMED`
