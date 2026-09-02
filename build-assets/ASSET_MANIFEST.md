@@ -21,14 +21,14 @@ This directory records the source package used to govern implementation. Where f
 - `SXV8-Agent-Orchestration-Strategy.md` — Drive ID `1oewc-4FZUevMDyKnIaqEsksO4zeXjohsoJtWFHzsB2U`.
 - `SXV8-IT-Roadmap.md` — Drive ID `1SYhg2sJs1-s8cNRYKTp426HETCTpFuao0CsSC-PfU2c`.
 
-## UI reference
-- `Wayne-Auction-Cockpit-Ui-Only.html` — Drive ID `1eY9LUP6buOTiL3YpdGvO-1qowK8r7D8Q` — earlier UI artifact; preserve as lineage reference.
-- `ui/React-Artifact-ui-prototype-spec.html` — source upload `React Artifact-ui prototype spec.html`; Library ID `libfile_bb3929079b78819190046ad550356923` — governing UI specification. UI spec status: DONE.
-- `ui/React-Artifact-ui-proto-demo.html` — source upload `React Artifact- ui Proto demo.html`; Library ID `libfile_9ada57d2e29c8191b75d0ca130dee50b` — executable interaction and visual reference. UI prototype status: DONE.
-- `ui/UI_STATUS.md` — implementation authority, invariants, and pending Meta documentation mirror.
+## UI reference — CLOSED / LOCKED
+- `ui/Ashante_SXV8_Figma_Wireframe_Spec_v1.0.0.pdf` — source upload `Ashante_SXV8_Figma_Wireframe_Spec.md.pdf`; Library ID `libfile_12036779aa908191ab699aa76723e9bf` — canonical 2D flat wireframe, interaction, component, state-machine, and anti-drift specification. **PROMOTED.**
+- `ui/React-Artifact-ui-prototype-spec.html` — governing HTML UI specification; Library ID `libfile_bb3929079b78819190046ad550356923`.
+- `ui/React-Artifact-ui-proto-demo.html` — accepted visual/interaction prototype evidence; Library ID `libfile_9ada57d2e29c8191b75d0ca130dee50b`. Prototype convenience wiring is not production authority.
+- `Wayne-Auction-Cockpit-Ui-Only.html` — Drive ID `1eY9LUP6buOTiL3YpdGvO-1qowK8r7D8Q` — earlier lineage reference.
+- `ui/UI_STATUS.md` — closure, authority order, compatibility test, and implementation interpretations.
 
-Meta will place another set of formal documentation in the Build Assets folder mirroring the completed UI specification and prototype. Promote it only if it is the same as, or materially equivalent to, the governing artifacts and changes no invariant. If it passes, promote it and close the UI lane as locked. If it differs materially or invariant equivalence is uncertain, do not promote it; record the variance and flag the operator. After closure, no further UI changes are authorized without a new explicit operator directive.
-
+The UI design lane is closed. Implementations must build from the same frozen specification that produced the accepted UI. Conforming implementation repairs are allowed; redesign, invariant change, or prototype-driven drift is not. Incompatible work must not be promoted. Meta documentation is not a promotion dependency.
 ## Research/source artifacts
 - `Meta brief.pdf` — Drive ID `11TKJbna9vAPEmCmbWhREHeSxadOeo3G6`.
 - `Search Properties - Wayne County Treasurer's Auction.PDF` — Drive ID `1h5sywoxjLkJpHGj2zwMGWLLUhS7ZVNDF` — source auction snapshot/reference, not permanent source of truth.
