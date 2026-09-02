@@ -27,7 +27,7 @@ This directory records the source package used to govern implementation. Where f
 - `ui/React-Artifact-ui-proto-demo.html` — source upload `React Artifact- ui Proto demo.html`; Library ID `libfile_9ada57d2e29c8191b75d0ca130dee50b` — executable interaction and visual reference. UI prototype status: DONE.
 - `ui/UI_STATUS.md` — implementation authority, invariants, and pending Meta documentation mirror.
 
-Meta will place another set of formal documentation in the Build Assets folder mirroring the completed UI specification and prototype. Those documents are expected companion documentation. Unless the operator explicitly changes scope, they formalize and trace the completed UI direction rather than reopening it for redesign.
+Meta will place another set of formal documentation in the Build Assets folder mirroring the completed UI specification and prototype. Promote it only if it is the same as, or materially equivalent to, the governing artifacts and changes no invariant. If it passes, promote it and close the UI lane as locked. If it differs materially or invariant equivalence is uncertain, do not promote it; record the variance and flag the operator. After closure, no further UI changes are authorized without a new explicit operator directive.
 
 ## Research/source artifacts
 - `Meta brief.pdf` — Drive ID `11TKJbna9vAPEmCmbWhREHeSxadOeo3G6`.
