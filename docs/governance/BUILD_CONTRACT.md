@@ -56,12 +56,17 @@ Nothing reaches mobile merely because research encountered it. Promotion is an e
 
 Promotion must:
 - validate the complete Property Envelope;
+- require title clearance verified through the defined human workflow;
+- reject high roof risk pending the required reverification;
+- require freshness TTL under 72 hours;
+- require configured target bid and non-negotiable hard cap;
+- enforce the 30-envelope mobile cardinality cap transactionally;
 - capture promotion timestamp and schema/envelope version;
-- preserve active warnings and blocking gates;
+- preserve active non-blocking warnings;
 - identify stale/missing evidence;
-- publish the field-relevant envelope to Firestore.
+- publish the bounded field projection of the complete canonical envelope to Firestore.
 
-Promotion is not certification. Warnings such as TITLE — HUMAN CHECK REQUIRED, SOURCE DEGRADED, or AUCTION STATUS REVERIFY may remain visible after promotion.
+The four mandatory UI-specification checks — title, roof, freshness and bid cap — may not be bypassed or downgraded to warnings. Promotion is not broader certification. Other non-blocking warnings such as SOURCE DEGRADED or AUCTION STATUS REVERIFY may remain visible after promotion. A stricter 48-hour Auction Mode reverification warning supplements the 72-hour promotion gate; it does not replace it.
 
 Demotion/removal from mobile never deletes desktop research history.
 
@@ -104,3 +109,9 @@ Do not reopen without contradictory implementation evidence: provenance-first ev
 
 ## Invariants
 One product family. One shared code lineage. One canonical Property Envelope. One authoritative heavy research store. One explicit promotion boundary. One deliberately small cloud field projection. One mobile-first field cockpit. One transparent source-health model. One human-escalation path. One complete portable property export.
+
+
+## Frozen UI compatibility contract
+The UI design lane is **CLOSED — UI LOCKED**. The canonical UI authority is `build-assets/ui/Ashante_SXV8_Figma_Wireframe_Spec_v1.0.0.pdf`, interpreted through `build-assets/ui/UI_STATUS.md`.
+
+Engineering must build to the same frozen specification that produced the accepted UI, not reverse-engineer incidental prototype code. A component or implementation is promotable only when it conforms to that specification, this Build Contract and the canonical Property Envelope. Prototype shortcuts cannot bypass invariants. Accessibility, responsive behavior, production wiring and defect repairs are conformity work; they may not materially change structural components or interaction architecture.
