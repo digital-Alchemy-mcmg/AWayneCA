@@ -46,7 +46,7 @@ Receipt required: PASS/FAILED/BLOCKED with exact evidence and variances. Only PA
 ### COMPILER-002 — SQLite schema reconstruction and certification candidate
 Role: WORKER
 Preferred runner: WORKER-2
-State: CLAIMED
+State: PASS
 Dependencies: VERIFY-000-001 PASS
 Scope: Produce a complete, canonical-contract-derived SQLite migration candidate and schema map for the authoritative local research corpus. Cover evidence relationships, source-health history, recommendation versions, operator actions, promotion history, and string-safe identity. Add migration/schema tests. The supplied 29-table DDL is evidence only and must not be represented as complete or copied forward blindly. Do not implement adapters, Firestore, promotion, or UI.
 Receipt required: derivation map, changed files, commands, migration/schema test results, table and constraint inventory, source-DDL variances, assumptions, gaps, exact commit, PASS/BLOCKED.
@@ -54,7 +54,7 @@ Receipt required: derivation map, changed files, commands, migration/schema test
 ### VERIFY-002 — Verify SQLite certification candidate
 Role: VERIFIER
 Preferred runner: VERIFIER-1
-State: WAITING_ON_COMPILER-002
+State: READY
 Dependencies: passing COMPILER-002 receipt and exact implementation commit
 Scope: Independently reproduce migrations and schema tests; inspect canonical field coverage, evidence/provenance relationships, identity constraints, history/version retention, runtime isolation, and divergence from the quarantined 29-table source. Do not repair.
 Receipt required: PASS/FAILED/BLOCKED with exact evidence and variances. Only PASS may certify the migration candidate for repository-layer work.
@@ -330,3 +330,48 @@ Append runner claims and receipts below this line. Preserve history; do not rewr
 - Branch: `main` (packet names no separate work branch; repository default remains the integration branch)
 - Dependency: VERIFY-000-001 PASS recorded at `196e4ceb4402593f39fca41ea5b94968b67bf82e`.
 - State: `CLAIMED`
+
+
+### RECEIPT — COMPILER-002
+- Claim time: `2026-09-03T02:15:35Z`
+- Completion time: `2026-09-03T02:23:36Z`
+- Runner: `WORKER-2`
+- State: `PASS`
+- Exact implementation commit: `195d50b6cf5d78689ae253978b91b67c185b6ad4`
+- Branch: `main`
+- Dependency: VERIFY-000-001 PASS at `196e4ceb4402593f39fca41ea5b94968b67bf82e`.
+- Changed files:
+  - `migrations/0001_canonical_research_schema.sql` — forward-only 49-table strict SQLite schema candidate, foreign keys, JSON guards, identity/bid/title/imagery constraints, and append-only history triggers.
+  - `migrations/__tests__/canonical-schema.test.ts` — migration, inventory, relationship, string-identity, envelope round-trip, history-retention, and invariant tests.
+  - `docs/data-spine/SQLITE_SCHEMA_CANDIDATE.md` — canonical derivation map, 49-table inventory, constraints, tests, source-DDL variance, and explicit gaps.
+  - `migrations/README.md` — local-runtime application boundary and candidate verification instructions.
+- Derivation and table inventory:
+  - All 46 names in the frozen `SQLITE_TABLE_MANIFEST` are present exactly once.
+  - Three contract-required projections are added and documented: `_schema_meta`, `property_envelopes`, and `property_characteristics`.
+  - Total application tables: 49. All 49 are `STRICT`; JSON projection columns use `json_valid`.
+  - Eight triggers make `evidence_ledger`, `audit_log`, `recommendation_versions`, and `promotion_snapshots` reject both updates and deletes.
+- Commands and results:
+  - Local candidate test: `npm test -- migrations/__tests__/canonical-schema.test.ts` — PASS; 1 file, 9 tests.
+  - Full local `npm run verify` — PASS; strict typecheck, 5 test files / 41 tests, and Next.js 16.3.4 production build.
+  - Exact remote checkout at `195d50b6cf5d78689ae253978b91b67c185b6ad4`: `npm ci` — PASS, 78 packages; `npm run verify` — PASS, 5 files / 41 tests plus production build.
+  - `PRAGMA foreign_key_check` — PASS with no violations in a fresh in-memory migration.
+  - Exact table-inventory assertion — PASS: frozen 46-table manifest plus only the three justified projections, total 49.
+  - Leading-zero parcel identity, deterministic municipality/parcel uniqueness, complete envelope JSON round trip, source-linked immutable evidence, append-only histories, target-at-or-under-hard-cap, automated-imagery confidence ceiling, and forbidden-title-label tests — PASS.
+  - `git diff --check` and exact remote checkout cleanliness — PASS.
+  - Remote exact-commit inspection — PASS; only the four scoped files changed from claim commit `08e2a01f16a904c3752d03334c13fbe6e26c9b79`.
+- Source-DDL variance:
+  - The quarantined source artifact remains SHA-256 `c13e9f719878ef428f82a8e74776f527a5a4ce4c19743df9dfbb193e131653b1` with 29 observed `CREATE TABLE` statements.
+  - It stops before operator actions and lacks 19 frozen manifest tables. It was not copied, imported, or represented as complete.
+  - The new migration is explicitly derived from the canonical TypeScript manifest and Build Contract; its three extra tables are justified separately in the derivation map.
+- Assumptions:
+  - Node 24's built-in `node:sqlite` is acceptable for migration certification tests; no runtime database driver/API is selected for the future repository layer by this packet.
+  - Canonical ISO date-time strings are validated by the existing Zod boundary before persistence; SQLite stores them as text without inventing a second parser.
+  - Parcel uniqueness is scoped to municipality plus normalized parcel ID; ambiguous identity remains an exception record rather than an address-only merge.
+  - The complete Property Envelope remains authoritative JSON; relational tables are query/history projections and do not redefine the property.
+- Gaps / downstream gates:
+  - VERIFY-002 must independently reproduce and inspect this exact commit before the migration is certified for repository-layer work.
+  - This packet does not implement the repository layer, backup/restore, adapters, live ingestion, Firestore, promotion runtime, the transactional 30-envelope cap, UI, or deployment.
+  - Cross-field Zod rules such as nulling the hard maximum when critical inputs are unknown remain at the canonical validation boundary and require later repository/promotion integration tests.
+  - No live/private property data, local database file, credential, or source snapshot was committed.
+- Invariant check: PASS. SQLite remains local authoritative storage; the canonical Property Envelope is unchanged; evidence and source uncertainty remain visible; title certainty is human-gated; automated imagery cannot claim HIGH confidence; promotion history is preserved without implementing or bypassing promotion; Firestore/mobile/UI/Vercel boundaries are untouched.
+- Release: VERIFY-002 is READY. SQLite remains uncertified until that verifier returns PASS.
