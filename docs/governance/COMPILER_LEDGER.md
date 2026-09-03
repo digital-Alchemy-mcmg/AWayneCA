@@ -75,7 +75,7 @@ Scope: Using permitted source snapshots and existing contracts, document determi
 
 ### FIXTURE-001 — Property Envelope fixture factory
 Role: WORKER
-State: READY_FALLBACK
+State: CLAIMED
 Dependencies: passing canonical schema/validator receipt
 Scope: Create synthetic, non-private Property Envelope fixtures covering valid, incomplete, stale, blocked, conflicting-identity, missing-evidence, source-degraded, and 30-envelope boundary cases. Fixtures must validate against the canonical contract and must never masquerade as real properties.
 
@@ -375,3 +375,12 @@ Append runner claims and receipts below this line. Preserve history; do not rewr
   - No live/private property data, local database file, credential, or source snapshot was committed.
 - Invariant check: PASS. SQLite remains local authoritative storage; the canonical Property Envelope is unchanged; evidence and source uncertainty remain visible; title certainty is human-gated; automated imagery cannot claim HIGH confidence; promotion history is preserved without implementing or bypassing promotion; Firestore/mobile/UI/Vercel boundaries are untouched.
 - Release: VERIFY-002 is READY. SQLite remains uncertified until that verifier returns PASS.
+
+
+### CLAIM — FIXTURE-001
+- Claim time: `2026-09-03T02:43:29Z`
+- Runner: `WORKER-1`
+- Assignment: `FIXTURE-001 — Property Envelope fixture factory`
+- Branch: `main` (packet names no separate work branch; repository default remains the integration branch)
+- Eligibility: no unclaimed active WORKER packet exists; VERIFY-002 is verifier-owned; the canonical schema and validator dependency is independently PASS.
+- State: `CLAIMED`
