@@ -46,10 +46,10 @@ Receipt required: PASS/FAILED/BLOCKED with exact evidence and variances. Only PA
 ### COMPILER-002 — SQLite schema reconstruction and certification candidate
 Role: WORKER
 Preferred runner: WORKER-2
-State: READY
+State: CLAIMED
 Dependencies: VERIFY-000-001 PASS
 Scope: Produce a complete, canonical-contract-derived SQLite migration candidate and schema map for the authoritative local research corpus. Cover evidence relationships, source-health history, recommendation versions, operator actions, promotion history, and string-safe identity. Add migration/schema tests. The supplied 29-table DDL is evidence only and must not be represented as complete or copied forward blindly. Do not implement adapters, Firestore, promotion, or UI.
-Receipt required: derivation map, changed files, commands, migration/schema test results, table and constraint inventory, source-DLL variances, assumptions, gaps, exact commit, PASS/BLOCKED.
+Receipt required: derivation map, changed files, commands, migration/schema test results, table and constraint inventory, source-DDL variances, assumptions, gaps, exact commit, PASS/BLOCKED.
 
 ### VERIFY-002 — Verify SQLite certification candidate
 Role: VERIFIER
@@ -321,3 +321,12 @@ Append runner claims and receipts below this line. Preserve history; do not rewr
   - `FIXTURE-001` and `TRACE-001` are released as fallback work because the canonical schema/validator dependency is now independently verified.
   - SQLite itself remains uncertified until COMPILER-002 and VERIFY-002 pass.
 - Invariant check: PASS. The frozen UI, canonical Property Envelope, local authoritative SQLite boundary, explicit promotion, bounded Firestore projection, human title limitation, mandatory title/roof/freshness/bid checks, source-health semantics, and uncertainty/provenance rules remain unchanged.
+
+
+### CLAIM — COMPILER-002
+- Claim time: `2026-09-03T02:15:35Z`
+- Runner: `WORKER-2`
+- Assignment: `COMPILER-002 — SQLite schema reconstruction and certification candidate`
+- Branch: `main` (packet names no separate work branch; repository default remains the integration branch)
+- Dependency: VERIFY-000-001 PASS recorded at `196e4ceb4402593f39fca41ea5b94968b67bf82e`.
+- State: `CLAIMED`
