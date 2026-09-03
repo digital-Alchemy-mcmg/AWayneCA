@@ -54,7 +54,7 @@ Receipt required: derivation map, changed files, commands, migration/schema test
 ### VERIFY-002 — Verify SQLite certification candidate
 Role: VERIFIER
 Preferred runner: VERIFIER-1
-State: READY
+State: CLAIMED
 Dependencies: passing COMPILER-002 receipt and exact implementation commit
 Scope: Independently reproduce migrations and schema tests; inspect canonical field coverage, evidence/provenance relationships, identity constraints, history/version retention, runtime isolation, and divergence from the quarantined 29-table source. Do not repair.
 Receipt required: PASS/FAILED/BLOCKED with exact evidence and variances. Only PASS may certify the migration candidate for repository-layer work.
@@ -422,3 +422,12 @@ Append runner claims and receipts below this line. Preserve history; do not rewr
   - Fixtures use fixed timestamps for deterministic tests; freshness evaluation against wall-clock time belongs to the promotion/runtime layer.
   - No live/private property, owner, parcel, source, or auction data is present.
 - Invariant check: PASS. No canonical field, enum, review-gate type, UI structure, storage boundary, promotion rule, or human-title limitation changed. Unknowns stay unknown; conflicts remain unresolved; the 30-envelope cap is represented without being bypassed.
+
+
+### CLAIM — VERIFY-002
+- Claim time: `2026-09-03T02:59:27Z`
+- Runner: `VERIFIER-1`
+- Assignment: `VERIFY-002 — Verify SQLite certification candidate`
+- Branch: `main` (ledger-only verification record; compiler implementation is inspected without modification)
+- Dependency: COMPILER-002 PASS receipt for exact implementation commit `195d50b6cf5d78689ae253978b91b67c185b6ad4`.
+- State: `CLAIMED`
