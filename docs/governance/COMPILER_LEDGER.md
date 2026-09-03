@@ -54,7 +54,7 @@ Scope: Build one evidence-based capability card per planned source: DS_Auction, 
 
 ### PREPROCESS-001 — Auction-data normalization plan
 Role: WORKER
-State: READY_FALLBACK
+State: CLAIMED
 Scope: Using permitted source snapshots and existing contracts, document deterministic normalization, identity, deduplication, missing-value, conflict, and provenance rules. Produce test vectors; do not silently resolve ambiguous parcel identities.
 
 ### FIXTURE-001 — Property Envelope fixture factory
@@ -219,3 +219,12 @@ Append runner claims and receipts below this line. Preserve history; do not rewr
   - The source package's 46-test and 49-table completion claims conflict with the raw artifacts. The repository truth is 32 passing tests and an unpromoted 29-table partial DDL.
   - No source adapter, SQLite persistence, Firestore projection, promotion implementation, UI implementation, or Vercel project was certified by this packet.
 - Invariant check: PASS. The canonical Property Envelope, UI lock, desktop/SQLite authority, explicit promotion boundary, bounded Firestore projection, title-human workflow, roof/freshness/bid blockers, and source-health semantics remain unchanged.
+
+
+### CLAIM — PREPROCESS-001
+- Claim time: `2026-09-03T01:43:19Z`
+- Runner: `WORKER-1`
+- Assignment: `PREPROCESS-001 — Auction-data normalization plan`
+- Branch: `main` (packet names no separate work branch; repository default remains the integration branch)
+- Eligibility: no higher-priority unclaimed WORKER packet exists; VERIFY-000-001 is verifier-owned.
+- State: `CLAIMED`
