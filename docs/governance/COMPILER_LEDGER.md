@@ -75,7 +75,7 @@ Scope: Using permitted source snapshots and existing contracts, document determi
 
 ### FIXTURE-001 — Property Envelope fixture factory
 Role: WORKER
-State: CLAIMED
+State: PASS
 Dependencies: passing canonical schema/validator receipt
 Scope: Create synthetic, non-private Property Envelope fixtures covering valid, incomplete, stale, blocked, conflicting-identity, missing-evidence, source-degraded, and 30-envelope boundary cases. Fixtures must validate against the canonical contract and must never masquerade as real properties.
 
@@ -384,3 +384,41 @@ Append runner claims and receipts below this line. Preserve history; do not rewr
 - Branch: `main` (packet names no separate work branch; repository default remains the integration branch)
 - Eligibility: no unclaimed active WORKER packet exists; VERIFY-002 is verifier-owned; the canonical schema and validator dependency is independently PASS.
 - State: `CLAIMED`
+
+
+### RECEIPT — FIXTURE-001
+- Claim time: `2026-09-03T02:43:29Z`
+- Completion time: `2026-09-03T02:48:13Z`
+- Runner: `WORKER-1`
+- State: `PASS`
+- Exact implementation commit: `b6bc836610d9d86d6a43d629159811d63c54f8a7`
+- Branch: `main`
+- Dependency: canonical schema/validator verification PASS at `196e4ceb4402593f39fca41ea5b94968b67bf82e`.
+- Changed files:
+  - `tests/fixtures/property-envelope-factory.ts` — reusable, Zod-validating synthetic envelope factory and 30/31 promoted-envelope boundary sets.
+  - `tests/property-envelope-fixtures.test.ts` — scenario semantics, canonical validation, uniqueness, synthetic labeling, and cardinality tests.
+  - `tests/fixtures/README.md` — synthetic-data policy, scenario inventory, and explanation of the downstream transactional cap.
+- Scenarios delivered:
+  - Canonical-valid baseline.
+  - Extensive incomplete/unknown state with null target and hard maximum.
+  - Stale auction, bid-plan, recommendation, decision, and ingestion state.
+  - Blocking title-review gate with no hard maximum.
+  - Conflicting parcel/address evidence held in `IDENTITY_EXCEPTION`.
+  - Missing evidence with unresolved confidence and explicit known unknowns.
+  - Degraded source health preserved as an explicit warning.
+  - Thirty distinct promoted envelopes at the locked limit and a 31-envelope over-limit set for later Promotion Gate rejection tests.
+- Commands and results:
+  - Focused `npm test -- tests/property-envelope-fixtures.test.ts` — PASS after correcting the initial fixture to use the frozen `ReviewGateType` vocabulary instead of inventing a `source_degraded` gate type.
+  - Full local `npm run verify` — PASS; strict typecheck, 6 test files / 54 tests, and Next.js 16.3.4 production build.
+  - Exact remote checkout at `b6bc836610d9d86d6a43d629159811d63c54f8a7`: `npm ci` — PASS, 78 packages; `npm run verify` — PASS, 6 files / 54 tests plus production build.
+  - `git diff --check` and exact remote checkout cleanliness — PASS.
+  - Exact remote commit scope — PASS; only the three fixture/test documentation files changed from claim commit `b68848dc17993c19c3edc6c9329cfd4da8b043c9`.
+- Assumptions:
+  - “Valid” means valid against the canonical Property Envelope contract; it does not mean promotion-eligible or professionally certified.
+  - Blocked, incomplete, stale, conflicted, missing-evidence, and degraded records must remain structurally valid so downstream components can render and test their true states.
+  - The 31-item collection is deliberately composed of individually valid envelopes; the later Promotion Gate owns the transactional collection-level rejection.
+- Gaps / downstream gates:
+  - The factory does not implement promotion eligibility, Firestore projection, database persistence, adapters, UI, or Vercel deployment.
+  - Fixtures use fixed timestamps for deterministic tests; freshness evaluation against wall-clock time belongs to the promotion/runtime layer.
+  - No live/private property, owner, parcel, source, or auction data is present.
+- Invariant check: PASS. No canonical field, enum, review-gate type, UI structure, storage boundary, promotion rule, or human-title limitation changed. Unknowns stay unknown; conflicts remain unresolved; the 30-envelope cap is represented without being bypassed.
