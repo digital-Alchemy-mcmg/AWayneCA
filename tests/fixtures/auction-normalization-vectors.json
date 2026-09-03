@@ -1,0 +1,215 @@
+{
+  "fixture_set": "PREPROCESS-001",
+  "version": "1.0.0",
+  "synthetic_only": true,
+  "notice": "All identifiers and addresses are invented test data and must never be presented as real properties.",
+  "vectors": [
+    {
+      "id": "parcel-leading-zero-and-punctuation",
+      "existing": null,
+      "input": {
+        "source_id": "DS_Auction",
+        "event_key": "SYNTH-2026-A",
+        "auction_item_id": "00017",
+        "parcel_id_raw": "00123456-7",
+        "municipality": "SYNTHETIC DETROIT"
+      },
+      "expected": {
+        "parcel_lexical_normalized": "00123456-7",
+        "parcel_comparison_key": "001234567",
+        "leading_zeroes_preserved": true,
+        "action": "CREATE_PROPERTY_AFTER_UNIQUE_AUTHORITATIVE_PARCEL_CONFIRMATION"
+      }
+    },
+    {
+      "id": "same-parcel-display-variant",
+      "existing": {
+        "property_id": "ash_synth_property_001",
+        "parcel_id_normalized": "00123456-7",
+        "municipality": "SYNTHETIC DETROIT"
+      },
+      "input": {
+        "parcel_id_raw": " 00123456.7 ",
+        "municipality": "synthetic detroit",
+        "gis_corroborated": true
+      },
+      "expected": {
+        "parcel_comparison_key": "001234567",
+        "action": "LINK_EXISTING_PROPERTY",
+        "property_id": "ash_synth_property_001",
+        "retain_raw_variant": "00123456.7",
+        "match_status": "verified"
+      }
+    },
+    {
+      "id": "exact-snapshot-replay",
+      "existing": {
+        "source_id": "DS_Auction",
+        "snapshot_sha256": "synthetic_hash_a",
+        "source_record_key": "DS_Auction|SYNTH-2026-A|00017"
+      },
+      "input": {
+        "source_id": "DS_Auction",
+        "snapshot_sha256": "synthetic_hash_a",
+        "event_key": "SYNTH-2026-A",
+        "auction_item_id": "00017"
+      },
+      "expected": {
+        "action": "NO_OP_REPLAY",
+        "new_property_count": 0,
+        "new_current_observation_count": 0
+      }
+    },
+    {
+      "id": "later-status-update-same-property",
+      "existing": {
+        "property_id": "ash_synth_property_001",
+        "source_record_key": "DS_Auction|SYNTH-2026-A|00017",
+        "status": "scheduled",
+        "snapshot_sha256": "synthetic_hash_a"
+      },
+      "input": {
+        "source_record_key": "DS_Auction|SYNTH-2026-A|00017",
+        "status": "open",
+        "snapshot_sha256": "synthetic_hash_b"
+      },
+      "expected": {
+        "action": "UPDATE_OBSERVATION_APPEND_HISTORY",
+        "property_id": "ash_synth_property_001",
+        "property_id_changed": false,
+        "new_property_count": 0
+      }
+    },
+    {
+      "id": "address-only-no-corroboration",
+      "existing": {
+        "property_id": "ash_synth_property_002",
+        "address_normalized": "100 TEST AVE, SYNTHETIC DETROIT"
+      },
+      "input": {
+        "parcel_id_raw": null,
+        "address_raw": "100 Test Avenue",
+        "municipality": "Synthetic Detroit",
+        "corroborating_source": null
+      },
+      "expected": {
+        "action": "DO_NOT_MERGE_CREATE_EXCEPTION",
+        "match_status": "unresolved",
+        "automatic_property_link": null
+      }
+    },
+    {
+      "id": "parcel-conflicts-with-prior-link",
+      "existing": {
+        "property_id": "ash_synth_property_003",
+        "parcel_id_normalized": "11111111-1"
+      },
+      "input": {
+        "source_record_key": "DS_Auction|SYNTH-2026-A|00022",
+        "parcel_id_raw": "22222222-2",
+        "parcel_authority": "authoritative"
+      },
+      "expected": {
+        "action": "FREEZE_LINK_CREATE_CONFLICT",
+        "match_status": "conflict",
+        "automatic_reassignment": false,
+        "retain_both_parcel_values": true
+      }
+    },
+    {
+      "id": "same-key-different-municipality",
+      "existing": {
+        "property_id": "ash_synth_property_004",
+        "parcel_comparison_key": "12345678",
+        "municipality": "SYNTHETIC CITY A"
+      },
+      "input": {
+        "parcel_id_raw": "12-34-56-78",
+        "municipality": "SYNTHETIC CITY B"
+      },
+      "expected": {
+        "action": "DO_NOT_MERGE_CROSS_NAMESPACE",
+        "match_status": "ambiguous"
+      }
+    },
+    {
+      "id": "missing-money-is-not-zero",
+      "existing": null,
+      "input": {
+        "minimum_bid_raw": "N/A",
+        "source_profile_sentinels": ["N/A"]
+      },
+      "expected": {
+        "minimum_bid": null,
+        "minimum_bid_is_verified_zero": false,
+        "known_unknown": "minimum_bid"
+      }
+    },
+    {
+      "id": "malformed-money-rejected",
+      "existing": null,
+      "input": {
+        "current_bid_raw": "$12,3X0.00"
+      },
+      "expected": {
+        "current_bid": null,
+        "action": "RECORD_PARSE_ERROR",
+        "raw_value_preserved": true
+      }
+    },
+    {
+      "id": "duplicate-rows-disagree",
+      "existing": null,
+      "input": {
+        "snapshot_sha256": "synthetic_hash_c",
+        "duplicate_rows": [
+          {"auction_item_id": "0044", "minimum_bid": "1000.00"},
+          {"auction_item_id": "0044", "minimum_bid": "1500.00"}
+        ]
+      },
+      "expected": {
+        "action": "CREATE_SOURCE_CONFLICT",
+        "last_row_wins": false,
+        "retain_both_rows": true
+      }
+    },
+    {
+      "id": "bundle-does-not-collapse-properties",
+      "existing": null,
+      "input": {
+        "auction_item_id": "BUNDLE-9",
+        "is_bundle": true,
+        "member_parcels": ["90000001-1", "90000002-2"]
+      },
+      "expected": {
+        "action": "CREATE_AUCTION_RELATIONSHIP",
+        "property_count": 2,
+        "shared_property_identity": false
+      }
+    },
+    {
+      "id": "field-provenance-required",
+      "existing": null,
+      "input": {
+        "raw_field": "Min Bid",
+        "raw_value": "$2,500.00",
+        "source_id": "DS_Auction",
+        "snapshot_id": "snapshot_synth_001",
+        "row_reference": "row-synth-12",
+        "normalizer_version": "auction-profile-synth-v1"
+      },
+      "expected": {
+        "minimum_bid": "2500.00",
+        "provenance_required": [
+          "source_id",
+          "snapshot_id",
+          "row_reference",
+          "raw_field",
+          "raw_value",
+          "normalizer_version",
+          "captured_at"
+        ]
+      }
+    }
+  ]
+}
