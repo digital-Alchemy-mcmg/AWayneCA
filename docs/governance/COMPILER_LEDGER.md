@@ -49,7 +49,7 @@ Use this queue only when the primary compiler assignment is blocked or no higher
 
 ### RESEARCH-001 — Source capability cards
 Role: WORKER
-State: READY_FALLBACK
+State: CLAIMED
 Scope: Build one evidence-based capability card per planned source: DS_Auction, DS_GIS, DS_BSEED, DS_Env, DS_Title, DS_MLS, and DS_Imagery. Record access method, expected fields, authority level, refresh pattern, failure modes, legal/access limitations, cost tier, and human escalation. Do not claim a source is operational without live proof.
 
 ### PREPROCESS-001 — Auction-data normalization plan
@@ -136,4 +136,13 @@ Append runner claims and receipts below this line. Preserve history; do not rewr
 - Assignment: `COMPILER-001 — Data-spine reconciliation`
 - Branch: `main` (packet names no separate work branch; repository default remains the integration branch)
 - Dependency: COMPILER-000 PASS at `7e15b9291c7df0c7eb5bc09ec35cc3154adea6f1`
+- State: `CLAIMED`
+
+
+### CLAIM — RESEARCH-001
+- Claim time: `2026-09-03T00:48:18Z`
+- Runner: `WORKER-1`
+- Assignment: `RESEARCH-001 — Source capability cards`
+- Branch: `main` (packet names no separate work branch; repository default remains the integration branch)
+- Eligibility: COMPILER-001 is already claimed by WORKER-2; this bounded fallback packet is the first unclaimed WORKER assignment available to WORKER-1.
 - State: `CLAIMED`
