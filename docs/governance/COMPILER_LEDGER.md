@@ -30,7 +30,7 @@ Receipt required: changed files, commands, results, assumptions, gaps, exact com
 ### COMPILER-001 — Data-spine reconciliation
 Role: WORKER
 Preferred runner: WORKER-2
-State: CLAIMED
+State: PASS
 Dependencies: passing COMPILER-000 receipt
 Scope: Hash and compare the schema-freeze copies; reconcile and import the canonical contract, validators, and validation tests; run type-check and validation tests; return field-level traceability.
 Receipt required: comparison result, selected authority, changed files, commands, test results, discrepancies, exact commit, PASS/BLOCKED.
@@ -38,7 +38,7 @@ Receipt required: comparison result, selected authority, changed files, commands
 ### VERIFY-000-001 — Verify compiler stages 0 and 1
 Role: VERIFIER
 Preferred runner: VERIFIER-1
-State: WAITING_ON_COMPILER-000-AND-001
+State: READY
 Dependencies: passing receipts and exact commits for COMPILER-000 and COMPILER-001
 Scope: Independently verify environment reproducibility, runtime boundaries, schema reconciliation, validator/test alignment, UI-required fields, Build Contract invariants, and traceability. Do not repair.
 Receipt required: PASS/FAILED/BLOCKED with exact evidence and variances. Only PASS may open SQLite certification.
@@ -176,3 +176,46 @@ Append runner claims and receipts below this line. Preserve history; do not rewr
   - Title remains mandatory human/transactional; MLS remains license-gated; imagery remains metered/terms-constrained.
   - W3 adapter/source-health contract and W4 Wayne County identity/source proof must pass before any source is promoted operational.
 - Invariant check: PASS. No canonical Property Envelope field, UI structure, storage boundary, promotion gate, source authority, or human-title limitation changed. No private/live property data or source evidence was committed.
+
+
+### RECEIPT — COMPILER-001
+- Claim time: `2026-09-02T21:14:45Z`
+- Completion time: `2026-09-03T01:16:20Z`
+- Runner: `WORKER-2`
+- State: `PASS`
+- Exact implementation commit: `496f41631bd432365bf2f0be98949d721141449b`
+- Branch: `main`
+- Dependency: COMPILER-000 PASS at `7e15b9291c7df0c7eb5bc09ec35cc3154adea6f1`
+- Comparison and selected authority:
+  - Both schema-freeze copies are exact duplicates: 40,868 bytes each; SHA-256 `2ba4bd1dfc2cbbead02e3788ca5375c8cf54241641a65d8e4021416dffa8b9b7`.
+  - One canonical repository copy is carried at `src/domain/property-envelope.ts`; neither duplicate source copy was preferred semantically.
+  - Source artifact hashes are recorded in `docs/data-spine/RECONCILIATION_REPORT.md`: validators `516551d4f2d559679c35112e481260d57cdf0f46531fab1a9c5aa2d439d3fb78`; validation tests `6ba939a9c0b89842649e2d3a6bd8b71bb9c1f3e58f201b42e32fd1174d9bbae7`; traceability `0a7fccd968cc94cca45e7c4f049cb60d759da8d1e89a08698156263b79a57e84`; SQLite DDL `c13e9f719878ef428f82a8e74776f527a5a4ce4c19743df9dfbb193e131653b1`.
+- Changed files:
+  - Canonical domain: `src/domain/property-envelope.ts`, `src/domain/index.ts`, `src/domain/README.md`.
+  - Runtime validation: `src/domain/validation/property-envelope.ts`, `src/domain/validation/index.ts`.
+  - Contract/tests: `src/domain/__tests__/property-envelope.validation.test.ts`, `src/domain/__tests__/property-envelope.contract-parity.test.ts`, `src/domain/__tests__/property-envelope.type-parity.ts`.
+  - Evidence: `docs/data-spine/FIELD_TRACEABILITY.csv`, `docs/data-spine/SOURCE_TRACEABILITY.csv`, `docs/data-spine/RECONCILIATION_REPORT.md`.
+- Commands and results:
+  - Source artifact byte hashing/comparison — PASS; the two schema candidates are byte-identical.
+  - `npm ci` — PASS; 78 packages installed from the lockfile in a fresh checkout of the exact implementation commit.
+  - `npm run typecheck` — PASS under strict TypeScript.
+  - `npm test` — PASS; 4 files, 32 tests.
+  - `npm run build` — PASS; Next.js 16.3.4 production build generated static `/` and `/_not-found`.
+  - `npm run verify` — PASS; clean typecheck, test, and build sequence.
+  - `git diff --check` — PASS.
+  - Field traceability row check — PASS; 356 canonical field rows plus header.
+  - Exact implementation checkout remained clean at `496f41631bd432365bf2f0be98949d721141449b`.
+- Reconciliations / discrepancies:
+  - Thirteen source Zod enum validators restated string arrays and inferred outputs incompatible with the frozen TypeScript enum types. Validators now import/use the canonical enum objects; no enum member or accepted runtime value changed.
+  - The supplied validation-test artifact is truncated during scenario 3 despite source documentation claiming a complete 46-case suite. The repository completes only the evident assertion/closing syntax and adds new invariant/parity tests. The passing repository total is 32 tests and is not represented as the claimed original 46.
+  - The supplied SQLite DDL is also truncated: 29 observed `CREATE TABLE` statements rather than the documented 49-table total. It was inspected but not imported or certified. SQLite certification remains closed.
+  - Bid normalization preserves deterministic identity so the planned roughly 30,000-record ingest establishes normalization habits and later refreshes update stable records instead of manufacturing duplicates; ambiguous identities remain explicit exceptions.
+- Assumptions:
+  - `main` is authorized because the packet names no separate work branch.
+  - The frozen TypeScript schema remains semantic authority. Repairs were limited to making validators type-compatible and reconstructing the visibly truncated test boundary; no invariant was altered.
+  - Field traceability covers all 31 validator-backed canonical interfaces and 356 fields; runtime top-level parity separately asserts the exact 34 Property Envelope keys.
+- Gaps / downstream gates:
+  - Independent VERIFY-000-001 review is still required before SQLite certification.
+  - The source package's 46-test and 49-table completion claims conflict with the raw artifacts. The repository truth is 32 passing tests and an unpromoted 29-table partial DDL.
+  - No source adapter, SQLite persistence, Firestore projection, promotion implementation, UI implementation, or Vercel project was certified by this packet.
+- Invariant check: PASS. The canonical Property Envelope, UI lock, desktop/SQLite authority, explicit promotion boundary, bounded Firestore projection, title-human workflow, roof/freshness/bid blockers, and source-health semantics remain unchanged.
