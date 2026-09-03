@@ -54,7 +54,7 @@ Scope: Build one evidence-based capability card per planned source: DS_Auction, 
 
 ### PREPROCESS-001 — Auction-data normalization plan
 Role: WORKER
-State: CLAIMED
+State: PASS
 Scope: Using permitted source snapshots and existing contracts, document deterministic normalization, identity, deduplication, missing-value, conflict, and provenance rules. Produce test vectors; do not silently resolve ambiguous parcel identities.
 
 ### FIXTURE-001 — Property Envelope fixture factory
@@ -228,3 +228,32 @@ Append runner claims and receipts below this line. Preserve history; do not rewr
 - Branch: `main` (packet names no separate work branch; repository default remains the integration branch)
 - Eligibility: no higher-priority unclaimed WORKER packet exists; VERIFY-000-001 is verifier-owned.
 - State: `CLAIMED`
+
+
+### RECEIPT — PREPROCESS-001
+- Claim time: `2026-09-03T01:43:19Z`
+- Completion time: `2026-09-03T01:47:41Z`
+- Runner: `WORKER-1`
+- State: `PASS`
+- Exact implementation commit: `0f36e5906522083d5b9daa026a2e46ca67aaf9b3`
+- Branch: `main`
+- Changed files:
+  - `docs/data-spine/AUCTION_NORMALIZATION_PLAN.md` — deterministic normalization, identity, update, deduplication, missing-value, conflict, provenance, batch/replay, and downstream-gate rules.
+  - `tests/fixtures/auction-normalization-vectors.json` — 12 synthetic normative vectors.
+- Commands and results:
+  - Read the live ledger, Build Contract, COMPILER-001 reconciliation report, source capability cards, and latest receipts — PASS; PREPROCESS-001 was the first eligible unclaimed WORKER packet.
+  - JSON parse/fixture invariant check — PASS; 12 vectors, 12 unique IDs, `synthetic_only: true`.
+  - Required plan-section check — PASS for deterministic normalization, match/update decision table, deduplication/replay, missing/conflict handling, provenance, 30,000-row operating pattern, and future acceptance tests.
+  - `git diff --check` — PASS.
+  - Local commit assembly — PASS. Direct local push was unavailable because the runner had no interactive GitHub credentials; identical file blobs/tree were published through the authenticated repository connector.
+  - Exact remote commit inspection — PASS; exactly the two scoped files are present at `0f36e5906522083d5b9daa026a2e46ca67aaf9b3`.
+- Assumptions:
+  - `main` is authorized because the packet names no separate branch.
+  - Work-value names such as `parcel_comparison_key` describe preprocessing and do not add fields to the frozen Property Envelope.
+  - Source-specific parcel display formats and sentinel lists remain versioned adapter-profile details pending W3/W4 proof.
+  - The first roughly 30,000-row ingest establishes stable records; later deliveries should primarily replay or update them. Creation remains an explicit identity-decision outcome, not the default refresh behavior.
+- Gaps / downstream gates:
+  - This packet specifies behavior and vectors; it does not implement a source adapter, database schema, normalizer runtime, or live ingestion.
+  - W3 must establish the adapter/source-health interface, W4 must validate Wayne County identity/source precedence, and SQLite certification must supply complete constraints before implementation.
+  - No live/private property payload, authenticated source session, or bulk source pull was used.
+- Invariant check: PASS. Raw evidence remains preserved; parcel IDs stay string-safe with leading zeroes; address-only matches cannot silently merge; conflicts remain explicit; auction minimum bid cannot become target/hard maximum; no UI or canonical Property Envelope structure changed.
