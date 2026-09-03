@@ -49,7 +49,7 @@ Use this queue only when the primary compiler assignment is blocked or no higher
 
 ### RESEARCH-001 — Source capability cards
 Role: WORKER
-State: CLAIMED
+State: PASS
 Scope: Build one evidence-based capability card per planned source: DS_Auction, DS_GIS, DS_BSEED, DS_Env, DS_Title, DS_MLS, and DS_Imagery. Record access method, expected fields, authority level, refresh pattern, failure modes, legal/access limitations, cost tier, and human escalation. Do not claim a source is operational without live proof.
 
 ### PREPROCESS-001 — Auction-data normalization plan
@@ -146,3 +146,33 @@ Append runner claims and receipts below this line. Preserve history; do not rewr
 - Branch: `main` (packet names no separate work branch; repository default remains the integration branch)
 - Eligibility: COMPILER-001 is already claimed by WORKER-2; this bounded fallback packet is the first unclaimed WORKER assignment available to WORKER-1.
 - State: `CLAIMED`
+
+
+### RECEIPT — RESEARCH-001
+- Claim time: `2026-09-03T00:48:18Z`
+- Completion time: `2026-09-03T00:51:00Z`
+- Runner: `WORKER-1`
+- State: `PASS`
+- Exact implementation commit: `5c8c35190cb26b917b185072466ccc2b2db70d61`
+- Branch: `main`
+- Changed files:
+  - `docs/research/SOURCE_CAPABILITY_CARDS.md` — seven evidence-based capability cards plus cross-source precedence and next-proof gates.
+- Commands / checks and results:
+  - Read `docs/governance/COMPILER_LEDGER.md`, `FOREMAN.md`, `docs/governance/BUILD_CONTRACT.md`, `docs/governance/WORK_QUEUE.md`, and latest commits — PASS; COMPILER-001 was already claimed by WORKER-2, making RESEARCH-001 the first eligible unclaimed WORKER packet for WORKER-1.
+  - Current primary-source review — PASS for documented/discoverable access evidence covering official Wayne County Treasurer, Wayne County GIS/ArcGIS, Detroit Open Data/BSEED, FEMA, EPA, Wayne County Register of Deeds, RESO, and Google Maps Platform documentation.
+  - Packet completeness check — PASS; exactly seven cards found: DS_Auction, DS_GIS, DS_BSEED, DS_Env, DS_Title, DS_MLS, and DS_Imagery.
+  - Required-dimension count — PASS; documented access, expected fields, refresh pattern, failure modes, legal/access limits and cost, human escalation, and evidence/confidence each appear once in all seven cards.
+  - Operational-claim guard — PASS; the document explicitly certifies no production adapter and labels every integration NOT OPERATIONAL/UNPROVEN, GATED, or HUMAN-ONLY.
+  - Exact commit inspection — PASS; commit contains only the research artifact.
+- Assumptions:
+  - `main` is authorized because the packet names no separate branch.
+  - “Expected fields” are separated into directly observed/documented fields and candidates requiring live schema proof; candidates are not promoted contracts.
+  - Cost tiers are planning categories, not procurement approvals or price guarantees.
+  - A live public documentation/service response proves discoverability only, not adapter reliability, permission for bulk use, or production readiness.
+- Gaps / downstream gates:
+  - No source adapter, credentials, full-corpus pull, authenticated title search, MLS agreement, billable imagery request, or source SLA was tested.
+  - Auction has no proven supported bulk API/stable machine contract.
+  - GIS full-corpus extraction/rate behavior and BSEED per-layer schema pinning remain open.
+  - Title remains mandatory human/transactional; MLS remains license-gated; imagery remains metered/terms-constrained.
+  - W3 adapter/source-health contract and W4 Wayne County identity/source proof must pass before any source is promoted operational.
+- Invariant check: PASS. No canonical Property Envelope field, UI structure, storage boundary, promotion gate, source authority, or human-title limitation changed. No private/live property data or source evidence was committed.
