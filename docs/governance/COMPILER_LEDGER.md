@@ -46,7 +46,7 @@ Receipt required: PASS/FAILED/BLOCKED with exact evidence and variances. Only PA
 ### COMPILER-002 — SQLite schema reconstruction and certification candidate
 Role: WORKER
 Preferred runner: WORKER-2
-State: PASS
+State: FAILED_VERIFICATION
 Dependencies: VERIFY-000-001 PASS
 Scope: Produce a complete, canonical-contract-derived SQLite migration candidate and schema map for the authoritative local research corpus. Cover evidence relationships, source-health history, recommendation versions, operator actions, promotion history, and string-safe identity. Add migration/schema tests. The supplied 29-table DDL is evidence only and must not be represented as complete or copied forward blindly. Do not implement adapters, Firestore, promotion, or UI.
 Receipt required: derivation map, changed files, commands, migration/schema test results, table and constraint inventory, source-DDL variances, assumptions, gaps, exact commit, PASS/BLOCKED.
@@ -54,10 +54,26 @@ Receipt required: derivation map, changed files, commands, migration/schema test
 ### VERIFY-002 — Verify SQLite certification candidate
 Role: VERIFIER
 Preferred runner: VERIFIER-1
-State: CLAIMED
+State: FAILED
 Dependencies: passing COMPILER-002 receipt and exact implementation commit
 Scope: Independently reproduce migrations and schema tests; inspect canonical field coverage, evidence/provenance relationships, identity constraints, history/version retention, runtime isolation, and divergence from the quarantined 29-table source. Do not repair.
 Receipt required: PASS/FAILED/BLOCKED with exact evidence and variances. Only PASS may certify the migration candidate for repository-layer work.
+
+### COMPILER-002R — Restore SQLite confidence-enum parity
+Role: WORKER
+Preferred runner: WORKER-2
+State: READY_REWORK
+Dependencies: VERIFY-002 FAILED receipt
+Scope: Repair only the verified confidence-value divergence in `property_identity.match_confidence`, `evidence_ledger.confidence`, and `imagery_observations.confidence`. Use the frozen canonical values `high`, `medium`, `low`, and `unresolved`; reject uppercase aliases. For imagery, cap automated street/aerial observations at medium while allowing high only for `operator_drive_by`. Update migration tests and candidate documentation. Do not alter table inventory, identity rules, promotion rules, UI, adapters, Firestore, or other architecture.
+Receipt required: changed files, exact old/new constraints, focused regression results, full verification, assumptions, gaps, exact commit, PASS/BLOCKED.
+
+### VERIFY-002R — Reverify SQLite confidence-enum parity
+Role: VERIFIER
+Preferred runner: VERIFIER-1
+State: WAITING_ON_COMPILER-002R
+Dependencies: passing COMPILER-002R receipt and exact implementation commit
+Scope: Independently reproduce the three corrected canonical confidence constraints, automated-imagery ceiling, exact 49-table inventory, history retention, runtime isolation, and full suite. Do not repair.
+Receipt required: PASS/FAILED/BLOCKED with exact evidence and variances. Only PASS may certify the SQLite migration candidate for repository-layer work.
 
 ## Bounded fallback queue
 
@@ -431,3 +447,42 @@ Append runner claims and receipts below this line. Preserve history; do not rewr
 - Branch: `main` (ledger-only verification record; compiler implementation is inspected without modification)
 - Dependency: COMPILER-002 PASS receipt for exact implementation commit `195d50b6cf5d78689ae253978b91b67c185b6ad4`.
 - State: `CLAIMED`
+
+
+### RECEIPT — VERIFY-002
+- Claim time: `2026-09-03T02:59:27Z`
+- Completion time: `2026-09-03T03:02:16Z`
+- Runner: `VERIFIER-1`
+- State: `FAILED`
+- Exact implementation commit inspected: `195d50b6cf5d78689ae253978b91b67c185b6ad4`
+- Verification record branch: `main`
+- Passing evidence:
+  - Fresh exact-commit fetch and detached checkout — PASS and clean.
+  - `npm ci` — PASS; 78 packages installed.
+  - `npm run verify` — PASS; strict typecheck, 5 test files / 41 tests, and Next.js 16.3.4 production build.
+  - `git diff --check` and clean-checkout status — PASS.
+  - Structural inventory — PASS: exactly 49 `CREATE TABLE` statements, covering all 46 frozen manifest names plus the three documented projections.
+  - History and relationship checks — PASS under the submitted suite: 49 strict tables, no foreign-key-check violations, and eight append-only triggers.
+  - Runtime placement — PASS: `node:sqlite` appears only in migration tests; migration instructions require `requireSQLiteRuntime()`; no client/browser/Vercel import was introduced.
+  - Quarantined source divergence remains accurately documented: the source hash and 29-table count were not promoted as authority.
+- Material canonical variance:
+  - Frozen `Confidence` values are exactly `high`, `medium`, `low`, and `unresolved`.
+  - `property_identity.match_confidence` instead accepts only `HIGH`, `MEDIUM`, `LOW`, and non-canonical `UNKNOWN`.
+  - `evidence_ledger.confidence` has the same incompatible uppercase/non-canonical constraint.
+  - `imagery_observations.confidence` accepts only uppercase `MEDIUM`, `LOW`, and non-canonical `UNKNOWN`; it rejects every canonical value. It also cannot represent the contract's allowed high-confidence `operator_drive_by` case because its constraint does not distinguish operator from automated observations.
+- Independent reproductions:
+  - Insert canonical PropertyIdentity with `match_confidence='high'` — REJECTED by the SQL CHECK.
+  - Insert canonical Evidence with `confidence='medium'` — REJECTED by the SQL CHECK.
+  - Insert canonical automated street imagery with `confidence='medium'` — REJECTED by the SQL CHECK.
+  - Insert canonical operator drive-by imagery with `confidence='high'` — REJECTED by the SQL CHECK.
+  - The submitted migration tests mask this divergence by inserting uppercase `HIGH` and `MEDIUM` values rather than canonical contract values.
+- Variance impact:
+  - Canonical Property Envelopes and evidence cannot round-trip into the typed relational projections without remapping or rejection.
+  - Accepting `UNKNOWN` would introduce a second database-only confidence vocabulary, violating the one-contract invariant.
+  - Therefore the schema cannot be certified for a repository layer despite its otherwise passing table, relationship, and history checks.
+- No repair performed: verifier changed no migration, test, domain, UI, or application file.
+- Release decision:
+  - SQLite certification remains CLOSED.
+  - No repository-layer gate is released.
+  - `COMPILER-002R` is limited to the exact verified enum-parity repair; `VERIFY-002R` must independently pass afterward.
+- Invariant check: FAILED at SQLite confidence projection parity. Frozen TypeScript, UI, storage, promotion, source-authority, and human-title contracts themselves remain unchanged.
