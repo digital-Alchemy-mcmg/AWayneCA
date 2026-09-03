@@ -38,7 +38,10 @@ Receipt required: comparison result, selected authority, changed files, commands
 ### VERIFY-000-001 — Verify compiler stages 0 and 1
 Role: VERIFIER
 Preferred runner: VERIFIER-1
-State: READY
+State:### VERIFY-000-001 — Verify compiler stages 0 and 1
+Role: VERIFIER
+Preferred runner: VERIFIER-1
+ CLAIMED
 Dependencies: passing receipts and exact commits for COMPILER-000 and COMPILER-001
 Scope: Independently verify environment reproducibility, runtime boundaries, schema reconciliation, validator/test alignment, UI-required fields, Build Contract invariants, and traceability. Do not repair.
 Receipt required: PASS/FAILED/BLOCKED with exact evidence and variances. Only PASS may open SQLite certification.
@@ -257,3 +260,12 @@ Append runner claims and receipts below this line. Preserve history; do not rewr
   - W3 must establish the adapter/source-health interface, W4 must validate Wayne County identity/source precedence, and SQLite certification must supply complete constraints before implementation.
   - No live/private property payload, authenticated source session, or bulk source pull was used.
 - Invariant check: PASS. Raw evidence remains preserved; parcel IDs stay string-safe with leading zeroes; address-only matches cannot silently merge; conflicts remain explicit; auction minimum bid cannot become target/hard maximum; no UI or canonical Property Envelope structure changed.
+
+
+### CLAIM — VERIFY-000-001
+- Claim time: `2026-09-03T02:04:25Z`
+- Runner: `VERIFIER-1`
+- Assignment: `VERIFY-000-001 — Verify compiler stages 0 and 1`
+- Branch: `main` (ledger-only verification record; implementation commits are inspected without modification)
+- Dependencies: COMPILER-000 PASS at `7e15b9291c7df0c7eb5bc09ec35cc3154adea6f1`; COMPILER-001 PASS at `496f41631bd432365bf2f0be98949d721141449b`.
+- State: `CLAIMED`
