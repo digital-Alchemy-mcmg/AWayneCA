@@ -38,13 +38,26 @@ Receipt required: comparison result, selected authority, changed files, commands
 ### VERIFY-000-001 — Verify compiler stages 0 and 1
 Role: VERIFIER
 Preferred runner: VERIFIER-1
-State:### VERIFY-000-001 — Verify compiler stages 0 and 1
-Role: VERIFIER
-Preferred runner: VERIFIER-1
- CLAIMED
+State: PASS
 Dependencies: passing receipts and exact commits for COMPILER-000 and COMPILER-001
 Scope: Independently verify environment reproducibility, runtime boundaries, schema reconciliation, validator/test alignment, UI-required fields, Build Contract invariants, and traceability. Do not repair.
 Receipt required: PASS/FAILED/BLOCKED with exact evidence and variances. Only PASS may open SQLite certification.
+
+### COMPILER-002 — SQLite schema reconstruction and certification candidate
+Role: WORKER
+Preferred runner: WORKER-2
+State: READY
+Dependencies: VERIFY-000-001 PASS
+Scope: Produce a complete, canonical-contract-derived SQLite migration candidate and schema map for the authoritative local research corpus. Cover evidence relationships, source-health history, recommendation versions, operator actions, promotion history, and string-safe identity. Add migration/schema tests. The supplied 29-table DDL is evidence only and must not be represented as complete or copied forward blindly. Do not implement adapters, Firestore, promotion, or UI.
+Receipt required: derivation map, changed files, commands, migration/schema test results, table and constraint inventory, source-DLL variances, assumptions, gaps, exact commit, PASS/BLOCKED.
+
+### VERIFY-002 — Verify SQLite certification candidate
+Role: VERIFIER
+Preferred runner: VERIFIER-1
+State: WAITING_ON_COMPILER-002
+Dependencies: passing COMPILER-002 receipt and exact implementation commit
+Scope: Independently reproduce migrations and schema tests; inspect canonical field coverage, evidence/provenance relationships, identity constraints, history/version retention, runtime isolation, and divergence from the quarantined 29-table source. Do not repair.
+Receipt required: PASS/FAILED/BLOCKED with exact evidence and variances. Only PASS may certify the migration candidate for repository-layer work.
 
 ## Bounded fallback queue
 
@@ -62,13 +75,13 @@ Scope: Using permitted source snapshots and existing contracts, document determi
 
 ### FIXTURE-001 — Property Envelope fixture factory
 Role: WORKER
-State: WAITING_ON_COMPILER-001
+State: READY_FALLBACK
 Dependencies: passing canonical schema/validator receipt
 Scope: Create synthetic, non-private Property Envelope fixtures covering valid, incomplete, stale, blocked, conflicting-identity, missing-evidence, source-degraded, and 30-envelope boundary cases. Fixtures must validate against the canonical contract and must never masquerade as real properties.
 
 ### TRACE-001 — UI-to-envelope crosswalk
 Role: WORKER
-State: WAITING_ON_COMPILER-001
+State: READY_FALLBACK
 Dependencies: passing canonical schema/validator receipt
 Scope: Map every field required by the frozen Desktop Workbench and Mobile Field Cockpit to its canonical Property Envelope path, evidence requirement, freshness behavior, and empty/unknown state. Report gaps; do not add fields unilaterally.
 
@@ -269,3 +282,42 @@ Append runner claims and receipts below this line. Preserve history; do not rewr
 - Branch: `main` (ledger-only verification record; implementation commits are inspected without modification)
 - Dependencies: COMPILER-000 PASS at `7e15b9291c7df0c7eb5bc09ec35cc3154adea6f1`; COMPILER-001 PASS at `496f41631bd432365bf2f0be98949d721141449b`.
 - State: `CLAIMED`
+
+
+### RECEIPT — VERIFY-000-001
+- Claim time: `2026-09-03T02:04:25Z`
+- Completion time: `2026-09-03T02:09:25Z`
+- Runner: `VERIFIER-1`
+- State: `PASS`
+- Verification record branch: `main`
+- Exact implementation commits inspected:
+  - COMPILER-000: `7e15b9291c7df0c7eb5bc09ec35cc3154adea6f1`
+  - COMPILER-001: `496f41631bd432365bf2f0be98949d721141449b`
+- Independence / method:
+  - Cloned the repository into a new checkout and detached at each exact implementation commit.
+  - Re-fetched all six recorded source artifacts from their canonical Drive IDs and recomputed byte sizes, SHA-256 hashes, truncation evidence, and DDL table count.
+  - Read the Build Contract, frozen UI status, reconciliation evidence, exact commit file inventories, and canonical contract without changing compiler work.
+- Commands and results:
+  - COMPILER-000: `npm ci` — PASS, 78 packages; `npm run verify` — PASS with strict typecheck, 2 test files / 5 tests, and Next.js 16.3.4 production build; `git diff --check` and clean-checkout status — PASS.
+  - COMPILER-001: `npm ci` — PASS, 78 packages; `npm run verify` — PASS with strict typecheck, 4 test files / 32 tests, and production build; `git diff --check` and clean-checkout status — PASS.
+  - Toolchain — PASS: Node `v24.19.0`, npm `11.9.0`; package engines remain Node 24 / npm 11.
+  - Runtime boundary — PASS: tests reject Vercel and Edge for authoritative SQLite; client/server documentation keeps browser code away from SQLite, raw evidence, credentials, and adapters.
+  - Field traceability — PASS: 357 CSV lines, comprising one header plus 356 unique canonical field paths; compile-time coverage spans 31 validator-backed interfaces; runtime parity locks all 34 top-level Property Envelope keys and 13 canonical enums.
+  - UI/build invariant representation — PASS: canonical fields cover title status, roof-condition knowledge/review gates, freshness, target bid, hard maximum bid, explicit promotion, source health, provenance, and mobile lineage. No second property model or UI structural change was introduced.
+  - Source byte verification — PASS: both 40,868-byte schema copies recomputed to `2ba4bd1dfc2cbbead02e3788ca5375c8cf54241641a65d8e4021416dffa8b9b7`; validators `516551d4f2d559679c35112e481260d57cdf0f46531fab1a9c5aa2d439d3fb78`; tests `6ba939a9c0b89842649e2d3a6bd8b71bb9c1f3e58f201b42e32fd1174d9bbae7`; traceability `0a7fccd968cc94cca45e7c4f049cb60d759da8d1e89a08698156263b79a57e84`; DDL `c13e9f719878ef428f82a8e74776f527a5a4ce4c19743df9dfbb193e131653b1`.
+  - Canonical-source comparison — PASS: repository schema and source-traceability content equal their source artifacts after terminal-whitespace normalization only.
+  - Commit lineage and scope — PASS: COMPILER-000 is an ancestor of COMPILER-001; exact changed-file inventories match the two receipts.
+- Exact variances / quarantines:
+  - The source validation-test artifact still ends at `expect(result.data.match_confidence).`; the documented 46-case claim is not reproducible. The honest repository result is 32 passing tests, including repaired boundary and supplemental parity/invariant coverage.
+  - The source DDL recomputes to only 29 `CREATE TABLE` statements, not the documented 49. No SQL/SQLite database artifact exists in the verified COMPILER-001 commit. This is correct quarantine, not certification.
+  - No source adapter, SQLite persistence/repository layer, Firestore projection, promotion runtime, frozen-UI implementation, or linked Vercel project is certified by this PASS.
+  - npm emitted a non-blocking host-level warning for an unknown `http-proxy` config; installs and all verification commands passed.
+- Assumptions:
+  - The exact commits, not later main-branch documentation, are the objects of compiler verification.
+  - Terminal blank-line normalization is non-semantic because source and repository schema/traceability are equal after `trimEnd`.
+  - The promotion gate and 30-envelope cap are contract requirements represented in the canonical model and tests but remain downstream runtime work.
+- Release:
+  - VERIFY-000-001 PASS opens `COMPILER-002` as the first active SQLite certification packet.
+  - `FIXTURE-001` and `TRACE-001` are released as fallback work because the canonical schema/validator dependency is now independently verified.
+  - SQLite itself remains uncertified until COMPILER-002 and VERIFY-002 pass.
+- Invariant check: PASS. The frozen UI, canonical Property Envelope, local authoritative SQLite boundary, explicit promotion, bounded Firestore projection, human title limitation, mandatory title/roof/freshness/bid checks, source-health semantics, and uncertainty/provenance rules remain unchanged.
