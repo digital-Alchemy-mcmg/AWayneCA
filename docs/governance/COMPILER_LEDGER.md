@@ -62,7 +62,7 @@ Receipt required: PASS/FAILED/BLOCKED with exact evidence and variances. Only PA
 ### COMPILER-002R — Restore SQLite confidence-enum parity
 Role: WORKER
 Preferred runner: WORKER-2
-State: READY_REWORK
+State: CLAIMED
 Dependencies: VERIFY-002 FAILED receipt
 Scope: Repair only the verified confidence-value divergence in `property_identity.match_confidence`, `evidence_ledger.confidence`, and `imagery_observations.confidence`. Use the frozen canonical values `high`, `medium`, `low`, and `unresolved`; reject uppercase aliases. For imagery, cap automated street/aerial observations at medium while allowing high only for `operator_drive_by`. Update migration tests and candidate documentation. Do not alter table inventory, identity rules, promotion rules, UI, adapters, Firestore, or other architecture.
 Receipt required: changed files, exact old/new constraints, focused regression results, full verification, assumptions, gaps, exact commit, PASS/BLOCKED.
@@ -486,3 +486,12 @@ Append runner claims and receipts below this line. Preserve history; do not rewr
   - No repository-layer gate is released.
   - `COMPILER-002R` is limited to the exact verified enum-parity repair; `VERIFY-002R` must independently pass afterward.
 - Invariant check: FAILED at SQLite confidence projection parity. Frozen TypeScript, UI, storage, promotion, source-authority, and human-title contracts themselves remain unchanged.
+
+
+### CLAIM — COMPILER-002R
+- Claim time: `2026-09-03T03:13:23Z`
+- Runner: `WORKER-2`
+- Assignment: `COMPILER-002R — Restore SQLite confidence-enum parity`
+- Branch: `main` (packet names no separate work branch; repository default remains the integration branch)
+- Dependency: VERIFY-002 FAILED receipt at `ddb0aeaa3b19c74678b126c2fa5f3eefc77966c5`.
+- State: `CLAIMED`
